@@ -1,0 +1,14 @@
+[alias]
+  ci = commit -m 
+  cia = commit -a -m 
+  st = status
+  co = checkout
+  cob = checkout -b
+  pso = push -u origin
+  plo = pull -u origin
+  pl = pull
+  ps = push
+  d = diff
+  l = log
+
+

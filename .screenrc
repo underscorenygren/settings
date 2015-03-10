@@ -1,0 +1,9 @@
+defshell -bash
+startup_message off
+vbell off
+bind ',' prev
+bind '.' next
+screen -t "console" bash -c "ls; exec bash --login"
+screen -t "vim" bash -c "vim; exec bash --login"
+screen -t "git" bash -c "git; exec bash --login"
+select 0
