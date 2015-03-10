@@ -1,3 +1,6 @@
+[user]
+  name = "Erik Nygren"
+  email = "sten.erik.nygren@gmail.com"
 [alias]
   ci = commit -m 
   cia = commit -a -m 
