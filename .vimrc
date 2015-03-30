@@ -13,7 +13,6 @@ set showtabline=2
 cnoreabbrev W w
 cnoreabbrev E e
 cnoreabbrev Q q
-cnoreabbrev WQ wq
 syntax on
 
 map <C-h> <C-w>h

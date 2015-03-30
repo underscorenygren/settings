@@ -13,7 +13,18 @@ alias serv="cd ~/dev/services"
 alias util="code && cd utilities"
 alias start_dynamo='cd ~/dev/dynamo && nohup java -Djava.library.path=./DynamoDBLocal_lib -jar DynamoDBLocal.jar -inMemory -port 8888 > ~/dynamoout.txt 2> ~/dynamoerr.text < /dev/null &'
 alias grep="grep --color=always"
-alias dockerpurge="docker ps -a | grep Exit | cut -d ' ' -f 1 | xargs docker rm"
+alias dpurge="docker ps -a | grep Exit | cut -d ' ' -f 1 | xargs docker rm"
+alias dipurge="docker images | grep none | tr -s ' ' | cut -d ' ' -f 3 | xargs docker rmi"
+alias dkillall="docker ps -a | cut -d ' ' -f 1 | xargs docker stop | xargs docker rm"
+alias d="docker"
+alias dc="docker-compose"
+alias dir="docker run --rm -i -t"
+alias dv="docker-volumes"
+
+delim() {
+  docker stop $1
+  docker rm $1
+}
 
 psvimfn() {
   ps axu | grep $1 > /tmp/psvim
