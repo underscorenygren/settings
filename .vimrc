@@ -23,8 +23,19 @@ map <C-t> <C-w>v
 map <C-n> <C-w>v
 map <C-s> <C-w>s
 
-autocmd Filetype go compiler goland
+if has("autocmd")
+  " Enable filetype detection
+  filetype plugin indent on
+
+  " Restore cursor position
+  autocmd BufReadPost *
+    \ if line("'\"") > 1 && line("'\"") <= line("$") |
+    \   exe "normal! g`\"" |
+    \ endif
+endif
+
+autocmd Filetype go compiler go
 let g:golang_onwrite = 0
-let g:golang_goroot = "/home/erik/go"
+let g:golang_goroot = "/Users/erik/dev/go/"
 
 execute pathogen#infect()
