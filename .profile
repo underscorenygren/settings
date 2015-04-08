@@ -24,6 +24,15 @@ alias dc="docker-compose"
 alias dir="docker run --rm -i -t"
 alias dv="docker-volumes"
 
+rg() {
+  if [ $# -eq 2 ]
+    then
+      rgrep $1 $2
+    else
+      rgrep $1 *
+  fi
+}
+
 code() {
   cd $CODEHOME
   if [ ! -z "$1" ]
@@ -46,6 +55,24 @@ pcgrepfn() {
 }
 psgrepfn() {
   ps axu | grep $1 
+}
+
+gget() {
+  if [ ! -d ./src ]
+    then
+      echo "must run from root go path ($GOPATH)"
+    else
+      out="$(go get $1 2>&1)"
+      if [ -z "$out" ]
+        then
+          echo $out
+          echo "[submodule \"$1\"]
+  path = src/$1
+  url = http://$1" >> .gitmodules
+        else
+          echo $out
+      fi
+  fi
 }
 
 alias psvim=psvimfn

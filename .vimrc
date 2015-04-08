@@ -9,10 +9,6 @@ set showcmd
 set backspace=indent,eol,start
 set smartcase
 set showtabline=2 
-
-cnoreabbrev W w
-cnoreabbrev E e
-cnoreabbrev Q q
 syntax on
 
 map <C-h> <C-w>h
@@ -37,5 +33,9 @@ endif
 autocmd Filetype go compiler go
 let g:golang_onwrite = 0
 let g:golang_goroot = "/Users/erik/dev/go/"
+
+cnoreabbrev W w
+cnoreabbrev E e
+cnoreabbrev Q q
 
 execute pathogen#infect()
