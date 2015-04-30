@@ -38,4 +38,7 @@ cnoreabbrev W w
 cnoreabbrev E e
 cnoreabbrev Q q
 
+set undofile
+set undodir="/Users/erik/.undos/
+
 execute pathogen#infect()

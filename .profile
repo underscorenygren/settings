@@ -1,8 +1,7 @@
-
 _JAVA_HOME=$(/usr/libexec/java_home)
 export CODEHOME="$HOME/dev"
 export GOPATH="$CODEHOME/go"
-export PATH="$PATH:$HOME/.rvm/bin:$_JAVA_HOME/bin:/Users/erik/dev/scala-2.11.6/bin:usr/local/opt/go/libexec/bin:$GOPATH/bin"
+export PATH="$PATH:$HOME/.rvm/bin:$_JAVA_HOME/bin:/Users/erik/dev/scala-2.11.6/bin:usr/local/opt/go/libexec/bin:$GOPATH/bin:$CODEHOME/terraform"
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 source "$HOME/git_prompt.sh"
@@ -41,7 +40,7 @@ code() {
   fi
 }
 
-delim() {
+delimfn() {
   docker stop $1
   docker rm $1
 }
@@ -75,6 +74,7 @@ gget() {
   fi
 }
 
+alias delim=delimfn
 alias psvim=psvimfn
 alias psgrep=psgrepfn
 alias pcgrep=pcgrepfn
