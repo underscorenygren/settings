@@ -28,9 +28,10 @@ if has("autocmd")
     \ if line("'\"") > 1 && line("'\"") <= line("$") |
     \   exe "normal! g`\"" |
     \ endif
+
+  autocmd Filetype go compiler go
 endif
 
-autocmd Filetype go compiler go
 let g:golang_onwrite = 0
 let g:golang_goroot = "/Users/erik/dev/go/"
 
@@ -40,5 +41,17 @@ cnoreabbrev Q q
 
 set undofile
 set undodir="/Users/erik/.undos/
+
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+set statusline+=%F
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_javascript_jshint_args = "--config ~/.jshint-config"
+
 
 execute pathogen#infect()
