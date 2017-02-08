@@ -79,7 +79,7 @@ gget() {
 }
 
 jagfn() {
-  ag -G "\.((java)|(scala))" $1
+  ag -G "\.((java)|(scala))" "$1"
 }
 
 killpsfn() {

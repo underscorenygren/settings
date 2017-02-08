@@ -1,4 +1,5 @@
 {
   "esversion" : 6,
-  "sub" : true
+  "sub" : true,
+  "loopfunc" : true
 }
