@@ -2,8 +2,10 @@ set number
 set autoindent
 set tabstop=2
 set shiftwidth=2
-set noswapfile
 set expandtab
+set softtabstop=0
+set smarttab
+set noswapfile
 set nowrap
 set showcmd
 set backspace=indent,eol,start
@@ -19,6 +21,10 @@ map <C-t> <C-w>v
 map <C-n> <C-w>v
 map <C-s> <C-w>s
 
+function! SetupPython()
+  setlocal noexpandtab shiftwidth=2 softtabstop=0 tabstop=2
+endfunction
+
 if has("autocmd")
   " Enable filetype detection
   filetype plugin indent on
@@ -30,6 +36,10 @@ if has("autocmd")
     \ endif
 
   autocmd Filetype go compiler go
+
+  autocmd VimEnter * set vb t_vb=
+  autocmd FileType python call SetupPython()
+
 endif
 
 let g:golang_onwrite = 0
@@ -52,6 +62,8 @@ let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_javascript_jshint_args = "--config ~/.jshint-config"
-
+let g:syntastic_python_checkers = ['python', 'flake8']
+let g:syntastic_python_flake8_args = "--ignore=W191,E126,E128,E501"
+let g:python_recommended_style = 0
 
 execute pathogen#infect()

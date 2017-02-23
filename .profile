@@ -1,7 +1,9 @@
 _JAVA_HOME=$(/usr/libexec/java_home)
-export CODEHOME="$HOME/dev"
+export CODEHOME="$HOME/code"
 export GOPATH="$CODEHOME/go"
-export PATH="$PATH:$HOME/.rvm/bin:$_JAVA_HOME/bin:/Users/erik/dev/scala-2.11.6/bin:usr/local/opt/go/libexec/bin:$GOPATH/bin:$CODEHOME/terraform:$CODEHOME/utilities/bin:$CODEHOME/phabricator/arcanist/bin"
+PYTHON_VERSION=2.7
+PYTHON_BIN="$HOME/Library/Python/$PYTHON_VERSION/bin/"
+export PATH="$PATH:$HOME/.rvm/bin:$_JAVA_HOME/bin:/Users/erik/dev/scala-2.11.6/bin:usr/local/opt/go/libexec/bin:$GOPATH/bin:$PYTHON_BIN:$CODEHOME/parsec-backend/infrastructure/bin"
 export EDITOR=vim
 export HISTCONTROL=ignoreboth
 
@@ -11,11 +13,6 @@ PS1='\h@\u:\w $(__git_ps1 "(%s)")\$ '
 
 alias ll="ls -al"
 alias rgrep="grep -r --color=always"
-alias web="cd $CODEHOME/website/rails"
-alias webd="cd $CODEHOME/website/rails/dckr"
-alias serv="cd $CODEHOME/services/javaworker"
-alias util="cd $CODEHOME/utilities"
-alias start_dynamo="cd $CODEHOME/dynamo && nohup java -Djava.library.path=./DynamoDBLocal_lib -jar DynamoDBLocal.jar -inMemory -port 8888 > ~/dynamoout.txt 2> ~/dynamoerr.text < /dev/null &"
 alias grep="grep --color=always"
 alias dpurge="docker ps -a | grep -Eiv Up | cut -d ' ' -f 1 | xargs docker rm"
 alias dipurge="docker images | grep none | tr -s ' ' | cut -d ' ' -f 3 | xargs docker rmi"
@@ -25,6 +22,7 @@ alias diclean="docker images | grep '<none>' | awk '{print \$3}' | xargs docker 
 alias d="docker"
 alias dc="docker-compose"
 alias dir="docker run --rm -i -t"
+alias k="kubectl"
 
 rg() {
   if [ $# -eq 2 ]
@@ -99,11 +97,6 @@ alias jag=jagfn
 alias grepkill=killpsfn
 alias grepid=psid
 
-#eval "$(docker-machine env default)"
-
-#unset DOCKER_CERT_PATH
-#unset DOCKER_TLS_VERIFY
-
 if [ -f $(brew --prefix)/etc/bash_completion ]; then
   . $(brew --prefix)/etc/bash_completion
 fi
@@ -112,19 +105,7 @@ docker-ip() {
   docker-machine ip default 2> /dev/null
 }
 
-alias rc='web && bundle exec rails c'
 
-alias unseal='curl -XPUT -k https://vault.service.consul:8200/v1/sys/unseal -d "{\"key\": \"$UNSEAL_KEY\"}"'
-alias keynoteconnect='ssh -i ~/dev/utilities/docformation/.ssh/cfn-docukey.pem sysadmin@66.219.169.94'
-alias demomaster='ssh demo.akka.master.i-7df7b5ee -L 8989:demo.akka.master.i-7df7b5ee:8081 2> /dev/null'
-alias prodmaster='ssh production.akka.master.i-7bb0ee83 -L 8989:production.akka.master.i-7bb0ee83:8081 2> /dev/null'
-
-dconnfn() {
-  util
-  cd docformation
-  ruby docconnection.rb $1 $2 $3 $4
-}
-alias dconn=dconnfn
 source ~/.tmuxinator/tmuxinator.bash
 alias tm=tmuxinator
 sshafn() {
