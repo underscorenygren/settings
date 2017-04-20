@@ -68,15 +68,29 @@ jagfn() {
   ag -G "\.((java)|(scala))" "$1"
 }
 
+pagfn() {
+  ag -G "\.(py)" "$1"
+}
+
 killpsfn() {
   kill $(ps aux | grep "$1" | awk '{print $2}')
 }
+
 psid() {
   ps aux | grep "$1" | awk '{print $2}'
 }
 
 ipfn() {
   echo $(curl -s https://api.ipify.org)
+}
+
+kgofn() {
+  kubectl config set current-context $1.parsec.tv
+  kubectl config current-context
+}
+
+krolloutfn() {
+  kubectl rollout status deploy/$1
 }
 
 
@@ -86,9 +100,11 @@ alias psgrep=psgrepfn
 alias pcgrep=pcgrepfn
 alias dm=docker-machine
 alias jag=jagfn
+alias pag=pagfn
 alias grepkill=killpsfn
 alias grepid=psid
 alias myip=ipfn
+alias kgo=kgofn
 alias ll="ls -al"
 alias rgrep="grep -r --color=always"
 alias grep="grep --color=always"
@@ -97,16 +113,21 @@ alias dipurge="docker images | grep none | tr -s ' ' | cut -d ' ' -f 3 | xargs d
 alias dkillall="docker ps -a | cut -d ' ' -f 1 | xargs docker stop | xargs docker rm"
 alias dclean="docker ps -a | grep 'Exited' | awk '{print \$1}' | xargs docker rm"
 alias diclean="docker images | grep '<none>' | awk '{print \$3}' | xargs docker rmi"
-alias d_purge_tags="docker images | egrep --color=never "\(\(dkr\)|\(gcr\)\)" | awk '{print \$3}' | xargs -n1 docker rmi -f"
+alias d_purge_tags="docker images | egrep --color=never '\(\(dkr\)|\(gcr\)\)' | awk '{print \$3}' | xargs -n1 docker rmi -f"
 alias d="docker"
 alias dc="docker-compose"
 alias dir="docker run --rm -i -t"
 alias k="kubectl"
 alias kg="kubectl get deploy,rs,svc,pods,ds"
+alias kgc="kubectl config current-context"
+alias kr=krolloutfn
+alias webcli="kubectl exec -it -c app \$(kubectl get po | grep --color=never website | head -1 | awk '{print \$1}') python app/cli.py"
 
 if [ -f $(brew --prefix)/etc/bash_completion ]; then
   . $(brew --prefix)/etc/bash_completion
 fi
+
+
 
 docker-ip() {
   docker-machine ip default 2> /dev/null

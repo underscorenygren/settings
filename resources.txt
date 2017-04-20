@@ -1,0 +1,4 @@
+#disable sounds
+http://superuser.com/questions/98868/how-do-i-disable-the-beep-in-osx-leopard-when-i-perform-an-invalid-action
+#disable white flash
+http://superuser.com/questions/201192/how-to-disable-flashing-terminal-in-mac-os
