@@ -93,6 +93,28 @@ krolloutfn() {
   kubectl rollout status deploy/$1
 }
 
+kexecfn() {
+  POD=`echo $(kubectl get po | grep --color=never $1 | head -1 | awk '{print \$1}')`
+  CONTAINER=""
+  if [ "$2" = "-c" ]; then
+    CONTAINER="$2 $3"
+    shift
+    shift
+  fi
+  kubectl exec -it $CONTAINER $POD $2 $3 $4 $5 $6 $7 $8 $9
+}
+
+ksecretfn() {
+  SHOW=`k get secret client-resource-manager -o json | jq .data`
+  RAW=`k get secret client-resource-manager -o json | jq .data[] --raw-output`
+  echo "$SHOW"
+  echo "--Decoded:--"
+  for i in $RAW; do echo `echo $i | base64 --decode` ; done
+}
+
+kbulkdeletefn() {
+  for po in `kubectl get pods | grep --color=never $1 | awk '{ print \$1}'`; do kubectl delete po/$po; done
+}
 
 alias delim=delimfn
 alias psvim=psvimfn
@@ -120,8 +142,13 @@ alias dir="docker run --rm -i -t"
 alias k="kubectl"
 alias kg="kubectl get deploy,rs,svc,pods,ds"
 alias kgc="kubectl config current-context"
+alias g=git
+alias tf=terraform
 alias kr=krolloutfn
+alias kexec=kexecfn
+alias kgs=ksecretfn
 alias webcli="kubectl exec -it -c app \$(kubectl get po | grep --color=never website | head -1 | awk '{print \$1}') python app/cli.py"
+alias kdel=kbulkdeletefn
 
 if [ -f $(brew --prefix)/etc/bash_completion ]; then
   . $(brew --prefix)/etc/bash_completion
