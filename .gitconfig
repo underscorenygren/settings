@@ -2,14 +2,14 @@
   name = "Erik Nygren"
   email = "sten.erik.nygren@gmail.com"
 [alias]
-  ci = commit -m 
-  cia = commit -a -m 
+  ci = commit -m
+  cia = commit -a -m
   st = status
   co = checkout
   cob = checkout -b
   pso = push -u origin
   plo = pull -u origin
-  pl = pull
+  pl = pull --rebase
   ps = push
   d = diff
   l = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit

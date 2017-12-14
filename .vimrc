@@ -66,7 +66,9 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_javascript_jshint_args = "--config ~/.jshint-config"
 let g:syntastic_python_checkers = ['python', 'flake8']
-let g:syntastic_python_flake8_args = "--ignore=W191,E123,E126,E128,E501,E111,F405,F403"
+let g:syntastic_python_flake8_args = "--ignore=E111,E123,E124,E126,E127,E128,E265,E302,E501,F405,F403,W191"
 let g:python_recommended_style = 0
+let g:vim_markdown_folding_disabled = 1
+map <C-a> <Nop>
 
 execute pathogen#infect()

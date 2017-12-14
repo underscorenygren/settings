@@ -105,8 +105,8 @@ kexecfn() {
 }
 
 ksecretfn() {
-  SHOW=`k get secret client-resource-manager -o json | jq .data`
-  RAW=`k get secret client-resource-manager -o json | jq .data[] --raw-output`
+  SHOW=`k get secret $1 -o json | jq .data`
+  RAW=`k get secret $1 -o json | jq .data[] --raw-output`
   echo "$SHOW"
   echo "--Decoded:--"
   for i in $RAW; do echo `echo $i | base64 --decode` ; done
@@ -114,6 +114,14 @@ ksecretfn() {
 
 kbulkdeletefn() {
   for po in `kubectl get pods | grep --color=never $1 | awk '{ print \$1}'`; do kubectl delete po/$po; done
+}
+
+kbulkdeletejobfn() {
+  for jb in `kubectl get jobs | grep --color=never $1 | awk '{ print \$1}'`; do kubectl delete job/$jb; done
+}
+
+ksshfn() {
+  ssh -i /Users/erik/code/node_key admin@$1
 }
 
 alias delim=delimfn
@@ -131,24 +139,30 @@ alias ll="ls -al"
 alias rgrep="grep -r --color=always"
 alias grep="grep --color=always"
 alias dpurge="docker ps -a | grep -Eiv Up | cut -d ' ' -f 1 | xargs docker rm"
-alias dipurge="docker images | grep none | tr -s ' ' | cut -d ' ' -f 3 | xargs docker rmi"
+alias dipurge="docker images | grep --color=never -E '<none>|amazonaws.com' | tr -s ' ' | cut -d ' ' -f 3 | xargs docker rmi -f"
 alias dkillall="docker ps -a | cut -d ' ' -f 1 | xargs docker stop | xargs docker rm"
 alias dclean="docker ps -a | grep 'Exited' | awk '{print \$1}' | xargs docker rm"
 alias diclean="docker images | grep '<none>' | awk '{print \$3}' | xargs docker rmi"
+alias diaclean="docker images | grep 'amazonaws.com' | awk '{print \$3}' | xargs docker rmi"
 alias d_purge_tags="docker images | egrep --color=never '\(\(dkr\)|\(gcr\)\)' | awk '{print \$3}' | xargs -n1 docker rmi -f"
 alias d="docker"
 alias dc="docker-compose"
 alias dir="docker run --rm -i -t"
 alias k="kubectl"
-alias kg="kubectl get deploy,rs,svc,pods,ds"
+alias ks="kubectl --namespace=kube-system"
+alias kg="kubectl get deploy,pods"
+alias kgk="kubectl get deploy,rs,svc,pods,ds --namespace=kube-system"
 alias kgc="kubectl config current-context"
 alias g=git
 alias tf=terraform
 alias kr=krolloutfn
 alias kexec=kexecfn
 alias kgs=ksecretfn
-alias webcli="kubectl exec -it -c app \$(kubectl get po | grep --color=never website | head -1 | awk '{print \$1}') python app/cli.py"
+alias webcli="kubectl exec -it \$(kubectl get po | grep --color=never janitor | grep --color=never Running | head -1 | awk '{print \$1}') -- python -i app/cli.py"
+alias appcli="kubectl exec -it \$(kubectl get po | grep --color=never app | grep --color=never Running | head -1 | awk '{print \$1}') -- python -i app/cli.py"
 alias kdel=kbulkdeletefn
+alias kdeljobs=kbulkdeletejobfn
+alias kssh=ksshfn
 
 if [ -f $(brew --prefix)/etc/bash_completion ]; then
   . $(brew --prefix)/etc/bash_completion
