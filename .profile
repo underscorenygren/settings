@@ -105,8 +105,8 @@ kexecfn() {
 }
 
 ksecretfn() {
-  SHOW=`k get secret $1 -o json | jq .data`
-  RAW=`k get secret $1 -o json | jq .data[] --raw-output`
+  SHOW=`k get secret $1 $2 $3 -o json | jq .data`
+  RAW=`k get secret $1 $2 $3 -o json | jq .data[] --raw-output`
   echo "$SHOW"
   echo "--Decoded:--"
   for i in $RAW; do echo `echo $i | base64 --decode` ; done
@@ -163,6 +163,7 @@ alias appcli="kubectl exec -it \$(kubectl get po | grep --color=never app | grep
 alias kdel=kbulkdeletefn
 alias kdeljobs=kbulkdeletejobfn
 alias kssh=ksshfn
+alias as=ansible-service
 
 if [ -f $(brew --prefix)/etc/bash_completion ]; then
   . $(brew --prefix)/etc/bash_completion
