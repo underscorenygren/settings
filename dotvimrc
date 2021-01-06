@@ -104,4 +104,16 @@ let g:syntastic_c_checkers = ['gcc', 'make']
 let g:syntastic_c_remove_include_errors = 1
 map <C-a> <Nop>
 
-execute pathogen#infect()
+" Install vim-plug if not found
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+endif
+
+" Must be installed with :PlugInstall!
+call plug#begin()
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'vim-syntastic/syntastic/'
+Plug 'fatih/vim-go'
+Plug 'prabirshrestha/vim-lsp'
+call plug#end()

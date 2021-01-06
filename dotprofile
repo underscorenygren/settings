@@ -3,18 +3,27 @@ export CODEHOME="$HOME/code"
 export GOPATH="$CODEHOME/go"
 PYTHON_VERSION=2.7
 PYTHON_BIN="$HOME/Library/Python/$PYTHON_VERSION/bin/"
-export PATH="$PATH:/usr/local/sbin:$HOME/.rvm/bin:$_JAVA_HOME/bin:/Users/erik/dev/scala-2.11.6/bin:usr/local/opt/go/libexec/bin:$GOPATH/bin:$PYTHON_BIN:$CODEHOME/infrastructure/bin:$CODEHOME/bin:/Users/erik/perl5/bin"
+export PATH="$PATH:/usr/local/sbin:$HOME/.rvm/bin:$_JAVA_HOME/bin:$HOME/dev/scala-2.11.6/bin:usr/local/opt/go/libexec/bin:$GOPATH/bin:$PYTHON_BIN:$CODEHOME/infrastructure/bin:$CODEHOME/bin:$HOME/perl5/bin:$HOME/.cargo/bin"
 export EDITOR=vim
 export HISTCONTROL=ignoreboth
-export PERL5LIB="/Users/erik/perl5/lib/perl5"
-export PERL_LOCAL_LIB_ROOT="/Users/erik/perl5"
-export PERL_MB_OPT="--install_base \"/Users/erik/perl5\""
-export PERL_MM_OPT="INSTALL_BASE=/Users/erik/perl5"
+export PERL5LIB="$HOME/perl5/lib/perl5"
+export PERL_LOCAL_LIB_ROOT="$HOME/perl5"
+export PERL_MB_OPT="--install_base \"$HOME/perl5\""
+export PERL_MM_OPT="INSTALL_BASE=$HOME/perl5"
 export COMPOSE_HTTP_TIMEOUT=3600
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 source "$HOME/git_prompt.sh"
 setopt PROMPT_SUBST ; PS1='[%n@%m %c$(__git_ps1 " (%s)")]\$ '
+
+source $HOME/.cargo/env
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '$CODEHOME/google-cloud-sdk/path.zsh.inc' ]; then . '$CODEHOME/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '$CODEHOME/google-cloud-sdk/completion.zsh.inc' ]; then . '$CODEHOME/google-cloud-sdk/completion.zsh.inc'; fi
+
 
 rg() {
   if [ $# -eq 2 ]
@@ -137,7 +146,7 @@ kbulkdeletejobfn() {
 }
 
 ksshfn() {
-  ssh -i /Users/erik/code/node_key admin@$1
+  ssh -i "$CODEHOME/node_key" admin@$1
 }
 
 alias delim=delimfn
@@ -210,6 +219,7 @@ alias ssha=sshafn
 source ~/.tokens
 
 
-[[ -s "/Users/erik/.gvm/scripts/gvm" ]] && source "/Users/erik/.gvm/scripts/gvm"
+[[ -s "$HOME/.gvm/scripts/gvm" ]] && source "$HOME/.gvm/scripts/gvm"
 export GOPATH="$CODEHOME/go"
 eval "$(pyenv init -)"
+source "$HOME/.cargo/env"
