@@ -13,6 +13,7 @@ set smartcase
 set showtabline=2
 set modeline
 set modelines=5
+set cindent
 syntax on
 
 map <C-h> <C-w>h
@@ -26,6 +27,14 @@ map <C-s> <C-w>s
 function! SetupPython()
   setlocal noexpandtab shiftwidth=2 softtabstop=0 tabstop=2
 endfunction
+
+fun! StripTrailingWhitespace()
+  " Only strip if the b:noStripeWhitespace variable isn't set
+  if exists('b:noStripWhitespace')
+      return
+  endif
+  %s/\s\+$//e
+endfun
 
 if has("autocmd")
   " Enable filetype detection
@@ -42,15 +51,33 @@ if has("autocmd")
   autocmd VimEnter * set vb t_vb=
   autocmd FileType python call SetupPython()
   autocmd FileType pug call SetupPython()
-  autocmd BufWritePre * :%s/\s\+$//e
+  autocmd BufWritePre * call StripTrailingWhitespace()
+  autocmd FileType markdown let b:noStripWhitespace=1
+endif
+
+autocmd Filetype c setlocal noexpandtab shiftwidth=2
+
+" The Silver Searcher
+if executable('ag')
+  " Use ag over grep
+  set grepprg=ag\ --nogroup\ --nocolor
+
+  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+
+  " ag is fast enough that CtrlP doesn't need to cache
+  let g:ctrlp_use_caching = 0
 endif
 
 let g:golang_onwrite = 0
-let g:golang_goroot = "/Users/erik/dev/go/"
+let g:go_def_mapping_enabled = 0
+let g:golang_goroot = "/Users/erik/code/go/"
 
 cnoreabbrev W w
 cnoreabbrev E e
 cnoreabbrev Q q
+
+autocmd Filetype javascript setlocal noexpandtab
 
 set undofile
 set undodir="/Users/erik/.undos/
@@ -65,10 +92,16 @@ let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_javascript_jshint_args = "--config ~/.jshint-config"
-let g:syntastic_python_checkers = ['python', 'flake8']
-let g:syntastic_python_flake8_args = "--ignore=E111,E123,E124,E126,E127,E128,E265,E302,E501,E711,F405,F403,W191"
+let g:syntastic_python_checkers = ['flake8']
+let g:syntastic_go_checkers = [ 'gofmt', 'golint']
+let g:syntastic_python_flake8_args = "--ignore=E111,E117,E121,E122,E123,E124,E126,E127,E128,E131,E265,E302,E501,E999,E711,F405,F403,E741,W191"
+let g:syntastic_javascript_checkers = ['eslint']
+" let g:syntastic_javascript_eslint_exe = 'npm run lint --'
 let g:python_recommended_style = 0
 let g:vim_markdown_folding_disabled = 1
+let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|\.git\|\.pyc'
+let g:syntastic_c_checkers = ['gcc', 'make']
+let g:syntastic_c_remove_include_errors = 1
 map <C-a> <Nop>
 
 execute pathogen#infect()

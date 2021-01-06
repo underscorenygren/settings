@@ -3,14 +3,18 @@ export CODEHOME="$HOME/code"
 export GOPATH="$CODEHOME/go"
 PYTHON_VERSION=2.7
 PYTHON_BIN="$HOME/Library/Python/$PYTHON_VERSION/bin/"
-export PATH="$PATH:$HOME/.rvm/bin:$_JAVA_HOME/bin:/Users/erik/dev/scala-2.11.6/bin:usr/local/opt/go/libexec/bin:$GOPATH/bin:$PYTHON_BIN:$CODEHOME/infrastructure/bin:$CODEHOME/bin"
+export PATH="$PATH:/usr/local/sbin:$HOME/.rvm/bin:$_JAVA_HOME/bin:/Users/erik/dev/scala-2.11.6/bin:usr/local/opt/go/libexec/bin:$GOPATH/bin:$PYTHON_BIN:$CODEHOME/infrastructure/bin:$CODEHOME/bin:/Users/erik/perl5/bin"
 export EDITOR=vim
 export HISTCONTROL=ignoreboth
+export PERL5LIB="/Users/erik/perl5/lib/perl5"
+export PERL_LOCAL_LIB_ROOT="/Users/erik/perl5"
+export PERL_MB_OPT="--install_base \"/Users/erik/perl5\""
+export PERL_MM_OPT="INSTALL_BASE=/Users/erik/perl5"
+export COMPOSE_HTTP_TIMEOUT=3600
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 source "$HOME/git_prompt.sh"
-PS1='\h@\u:\w $(__git_ps1 "(%s)")\$ '
-
+setopt PROMPT_SUBST ; PS1='[%n@%m %c$(__git_ps1 " (%s)")]\$ '
 
 rg() {
   if [ $# -eq 2 ]
@@ -68,8 +72,20 @@ jagfn() {
   ag -G "\.((java)|(scala))" "$1"
 }
 
+jsagfn() {
+  ag -G "\.((js)|(json)|(ts))" "$1"
+}
+
 pagfn() {
   ag -G "\.(py)" "$1"
+}
+
+gagfn() {
+  ag -G "\.(go)" "$1"
+}
+
+dagfn() {
+  ag --depth 0 "$1"
 }
 
 killpsfn() {
@@ -130,7 +146,10 @@ alias psgrep=psgrepfn
 alias pcgrep=pcgrepfn
 alias dm=docker-machine
 alias jag=jagfn
+alias jsag=jsagfn
+alias dag=dagfn
 alias pag=pagfn
+alias gag=gagfn
 alias grepkill=killpsfn
 alias grepid=psid
 alias myip=ipfn
@@ -165,16 +184,21 @@ alias kdeljobs=kbulkdeletejobfn
 alias kssh=ksshfn
 alias as=ansible-service
 
-if [ -f $(brew --prefix)/etc/bash_completion ]; then
-  . $(brew --prefix)/etc/bash_completion
+
+if type brew &>/dev/null; then
+  HOMEBREW_PREFIX="$(brew --prefix)"
+  if [[ -r "${HOMEBREW_PREFIX}/etc/profile.d/bash_completion.sh" ]]; then
+    source "${HOMEBREW_PREFIX}/etc/profile.d/bash_completion.sh"
+  else
+    for COMPLETION in "${HOMEBREW_PREFIX}/etc/bash_completion.d/"*; do
+      [[ -r "$COMPLETION" ]] && source "$COMPLETION"
+    done
+  fi
 fi
-
-
 
 docker-ip() {
   docker-machine ip default 2> /dev/null
 }
-
 
 source ~/.tmuxinator/tmuxinator.bash
 alias tm=tmuxinator
@@ -185,3 +209,7 @@ sshafn() {
 alias ssha=sshafn
 source ~/.tokens
 
+
+[[ -s "/Users/erik/.gvm/scripts/gvm" ]] && source "/Users/erik/.gvm/scripts/gvm"
+export GOPATH="$CODEHOME/go"
+eval "$(pyenv init -)"
