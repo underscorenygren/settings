@@ -192,6 +192,7 @@ alias kdel=kbulkdeletefn
 alias kdeljobs=kbulkdeletejobfn
 alias kssh=ksshfn
 alias as=ansible-service
+alias vscode="/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code"
 
 
 if type brew &>/dev/null; then

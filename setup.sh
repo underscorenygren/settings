@@ -8,3 +8,10 @@ ln -sf "$PWD/dotscreenrc" ~/.screenrc
 ln -sf "$PWD/dottmux.conf" ~/.tmux.conf
 ln -sf "$PWD/dotvimrc" ~/.vimrc
 ln -sf "$PWD/git_prompt.sh" ~/git_prompt.sh
+VSCODE_DIR="$HOME/Library/Application Support/Code/User/"
+if [[ -d "$VSCODE_DIR" ]]; then
+  ln -sf "$PWD/vscodesettings.json" "$VSCODE_DIR/settings.json"
+else
+  echo "no vscode dir"
+fi
+
