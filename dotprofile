@@ -24,6 +24,10 @@ if [ -f '$CODEHOME/google-cloud-sdk/path.zsh.inc' ]; then . '$CODEHOME/google-cl
 # The next line enables shell command completion for gcloud.
 if [ -f '$CODEHOME/google-cloud-sdk/completion.zsh.inc' ]; then . '$CODEHOME/google-cloud-sdk/completion.zsh.inc'; fi
 
+bindkey -v
+bindkey '^R' history-incremental-search-backward
+
+
 
 rg() {
   if [ $# -eq 2 ]
