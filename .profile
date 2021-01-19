@@ -1,15 +1,14 @@
 _JAVA_HOME=$(/usr/libexec/java_home)
 export CODEHOME="$HOME/code"
 export GOPATH="$CODEHOME/go"
-PYTHON_VERSION=2.7
+PYTHON_VERSION=3.8.2
 PYTHON_BIN="$HOME/Library/Python/$PYTHON_VERSION/bin/"
-export PATH="$PATH:$HOME/.rvm/bin:$_JAVA_HOME/bin:/Users/erik/dev/scala-2.11.6/bin:usr/local/opt/go/libexec/bin:$GOPATH/bin:$PYTHON_BIN:$CODEHOME/infrastructure/bin:$CODEHOME/bin"
+export PYENV_VERSION=$PYTHON_VERSION
+export PATH="$PATH:$HOME/.rvm/bin:$_JAVA_HOME/bin:/Users/erik/dev/scala-2.11.6/bin:usr/local/opt/go/libexec/bin:$GOPATH/bin:$PYTHON_BIN:$CODEHOME/bin"
 export EDITOR=vim
 export HISTCONTROL=ignoreboth
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
-source "$HOME/git_prompt.sh"
-PS1='\h@\u:\w $(__git_ps1 "(%s)")\$ '
 
 
 rg() {
@@ -84,46 +83,6 @@ ipfn() {
   echo $(curl -s https://api.ipify.org)
 }
 
-kgofn() {
-  kubectl config set current-context $1.parsec.tv
-  kubectl config current-context
-}
-
-krolloutfn() {
-  kubectl rollout status deploy/$1
-}
-
-kexecfn() {
-  POD=`echo $(kubectl get po | grep --color=never $1 | head -1 | awk '{print \$1}')`
-  CONTAINER=""
-  if [ "$2" = "-c" ]; then
-    CONTAINER="$2 $3"
-    shift
-    shift
-  fi
-  kubectl exec -it $CONTAINER $POD $2 $3 $4 $5 $6 $7 $8 $9
-}
-
-ksecretfn() {
-  SHOW=`k get secret $1 $2 $3 -o json | jq .data`
-  RAW=`k get secret $1 $2 $3 -o json | jq .data[] --raw-output`
-  echo "$SHOW"
-  echo "--Decoded:--"
-  for i in $RAW; do echo `echo $i | base64 --decode` ; done
-}
-
-kbulkdeletefn() {
-  for po in `kubectl get pods | grep --color=never $1 | awk '{ print \$1}'`; do kubectl delete po/$po; done
-}
-
-kbulkdeletejobfn() {
-  for jb in `kubectl get jobs | grep --color=never $1 | awk '{ print \$1}'`; do kubectl delete job/$jb; done
-}
-
-ksshfn() {
-  ssh -i /Users/erik/code/node_key admin@$1
-}
-
 alias delim=delimfn
 alias psvim=psvimfn
 alias psgrep=psgrepfn
@@ -155,21 +114,6 @@ alias kgk="kubectl get deploy,rs,svc,pods,ds --namespace=kube-system"
 alias kgc="kubectl config current-context"
 alias g=git
 alias tf=terraform
-alias kr=krolloutfn
-alias kexec=kexecfn
-alias kgs=ksecretfn
-alias webcli="kubectl exec -it \$(kubectl get po | grep --color=never janitor | grep --color=never Running | head -1 | awk '{print \$1}') -- python -i app/cli.py"
-alias appcli="kubectl exec -it \$(kubectl get po | grep --color=never app | grep --color=never Running | head -1 | awk '{print \$1}') -- python -i app/cli.py"
-alias kdel=kbulkdeletefn
-alias kdeljobs=kbulkdeletejobfn
-alias kssh=ksshfn
-alias as=ansible-service
-
-if [ -f $(brew --prefix)/etc/bash_completion ]; then
-  . $(brew --prefix)/etc/bash_completion
-fi
-
-
 
 docker-ip() {
   docker-machine ip default 2> /dev/null
@@ -185,3 +129,4 @@ sshafn() {
 alias ssha=sshafn
 source ~/.tokens
 
+export PATH="$HOME/.cargo/bin:$PATH"
