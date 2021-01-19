@@ -2,7 +2,6 @@ echo "linking to $PWD"
 ln -sf "$PWD/dotgitconfig" ~/.gitconfig
 ln -sf "$PWD/dotjshint-config"  ~/.jshint-config
 ln -sf "$PWD/dotprofile"  ~/.profile
-ln -sf "$PWD/dotprofile"  ~/.zshrc
 ln -sf "$PWD/dotzprofile"  ~/.zprofile
 ln -sf "$PWD/dotscreenrc" ~/.screenrc
 ln -sf "$PWD/dottmux.conf" ~/.tmux.conf
