@@ -1,0 +1,328 @@
+{
+  "vim.easymotion": true,
+  "vim.incsearch": true,
+  "vim.useSystemClipboard": true,
+  "vim.useCtrlKeys": true,
+  "vim.hlsearch": true,
+  "vim.insertModeKeyBindings": [
+    {
+      "before": ["j", "j"],
+      "after": ["<Esc>"]
+    }
+  ],
+	"vim.normalModeKeyBindings": [
+		{
+			 "before": [";"],
+			 "after": [":"]
+		 }
+	],
+  "vim.normalModeKeyBindingsNonRecursive": [
+    {
+      "before": ["<C-l>"],
+      "commands": [
+        "workbench.action.nextEditor"
+      ]
+    },
+    {
+      "before": ["<C-h>"],
+      "commands": [
+        "workbench.action.previousEditor"
+      ]
+    },
+    {
+      "before": ["<C-k>"],
+      "commands": [
+        "workbench.action.focusActiveEditorGroup"
+      ]
+    },
+        {
+            "before": [
+                ">", ">"
+            ],
+            "commands": [
+                "editor.action.indentLines"
+            ]
+        },
+        {
+            "before": [
+                "<", "<"
+            ],
+            "commands": [
+                "editor.action.outdentLines"
+            ]
+        },
+{
+      "before": ["<leader>", "<space>"],
+      "after": [],
+      "commands": [
+        {
+          "command": "workbench.action.showCommands",
+          "args": []
+        }
+      ]
+    },
+    {
+      "before": ["<leader>", "'"],
+      "after": [],
+      "commands": [
+        {
+          "command": "workbench.action.terminal.toggleTerminal",
+          "args": []
+        }
+      ]
+    },
+    {
+      "before": ["<leader>", "1"],
+      "after": [],
+      "commands": [
+        {
+          "command": "workbench.action.focusFirstEditorGroup",
+          "args": []
+        }
+      ]
+    },
+    {
+      "before": ["<leader>", "2"],
+      "after": [],
+      "commands": [
+        {
+          "command": "workbench.action.focusSecondEditorGroup",
+          "args": []
+        }
+      ]
+    },
+    {
+      "before": ["<leader>", "t", "t"],
+      "after": [],
+      "commands": [
+        {
+          "command": "editor.debug.action.toggleBreakpoint",
+          "args": []
+        }
+      ]
+    },
+    {
+      "before": ["<leader>", "d", "d"],
+      "after": [],
+      "commands": [
+        {
+          "command": "workbench.action.debug.start",
+          "args": []
+        }
+      ]
+    },
+    {
+      "before": ["<leader>", "r", "r"],
+      "after": [],
+      "commands": [
+        {
+					"command": "rust-analyzer.run",
+					"when": "inRustProject"
+        }
+      ]
+    },
+    {
+      "before": ["<leader>", "r", "e"],
+      "after": [],
+      "commands": [
+        {
+					"command": "workbench.action.tasks.reRunTask",
+					"args": []
+        }
+      ]
+    },
+    {
+      "before": ["<leader>", "f", "f"],
+      "after": [],
+      "commands": [
+          "workbench.action.files.openFileFolder"
+      ]
+    },
+    {
+      "before": ["<leader>", "f", "r"],
+      "after": [],
+      "commands": [
+        {
+          "command": "workbench.action.openRecent",
+          "args": []
+        }
+      ]
+    },
+    {
+      "before": ["<leader>", "f", "s"],
+      "after": [],
+      "commands": [
+        {
+          "command": "workbench.action.files.save",
+          "args": []
+        }
+      ]
+    },
+    {
+      "before": ["<leader>", "f", "S"],
+      "commands": [
+        {
+          "command": "workbench.action.files.saveAll"
+        }
+      ]
+    },
+    {
+      "before": ["<leader>", "f", "t"],
+      "after": [],
+      "commands": [
+        {
+          "command": "workbench.view.explorer",
+          "args": []
+        }
+      ]
+    },
+    {
+      "before": ["<leader>", "f", "y"],
+      "after": [],
+      "commands": [
+        {
+          "command": "workbench.action.files.copyPathOfActiveFile",
+          "args": []
+        }
+      ]
+    },
+{
+      "before": ["<leader>", "="],
+      "commands": [
+        {
+          "command": "editor.action.formatDocument"
+        }
+      ]
+    },
+{
+      "before": ["<leader>", "s", "j"],
+      "after": [],
+      "commands": [
+        {
+          "command": "workbench.action.gotoSymbol",
+          "args": []
+        }
+      ]
+    },
+    {
+      "before": ["<leader>", "s", "p"],
+      "after": [],
+      "commands": [
+        {
+          "command": "workbench.action.findInFiles",
+          "args": []
+        }
+      ]
+    },
+    {
+      "before": ["<leader>", "s", "P"],
+      "after": [],
+      "commands": [
+        {
+          "command": "workbench.action.findInFilesWithSelectedText",
+          "args": []
+        }
+      ]
+    },
+    {
+      "before": ["<leader>", "T", "F"],
+      "after": [],
+      "commands": [
+        {
+          "command": "workbench.action.toggleFullScreen",
+          "args": []
+        }
+      ]
+    },
+    {
+      "before": ["<leader>", "d"],
+      "after": ["d", "d"]
+    },
+    {
+      "before": ["<leader>", "d"],
+      "after": ["d", "d"]
+    },
+    {
+      "before": ["<C-n>"],
+      "commands": [":nohl"]
+    },
+		{
+      "before": ["<leader>", "e", "e"],
+			"commands": ["workbench.action.reloadWindow"]
+		},
+    {
+      "before": ["<leader>", "e", "p"],
+      "after": [],
+      "commands": [
+				"workbench.actions.view.problems"
+      ]
+    },
+    {
+      "before": ["<leader>", "e", "o"],
+      "commands": [
+				"workbench.action.output.toggleOutput"
+      ]
+    },
+    {
+      "before": ["<leader>", "e", "t"],
+      "after": [],
+      "commands": [
+        {
+          "command": "workbench.action.terminal.toggleTerminal",
+          "args": []
+        }
+      ]
+    },
+    {
+      "before": ["<leader>", "v", "d"],
+      "commands": [
+				"workbench.view.debug"
+      ]
+    },
+    {
+      "before": ["<leader>", "v", "e"],
+      "commands": [
+				"workbench.view.explorer"
+      ]
+    },
+    {
+      "before": ["<leader>", "v", "s"],
+      "commands": [
+				"workbench.view.search"
+      ]
+    },
+    {
+      "before": ["<leader>", "v", "x"],
+      "commands": [
+				"workbench.view.extensions"
+      ]
+    },
+    {
+      "before": ["<leader>", "v", "g"],
+      "commands": [
+				"workbench.view.scm"
+      ]
+    }
+  ],
+	 "vim.commandLineModeKeyBindings": [
+				{
+						"before": ["W"],
+						"after": ["w"]
+				},
+				{
+						"before": ["E"],
+						"after": ["e"]
+				},
+				{
+						"before": ["Q"],
+						"after": ["q"]
+				}
+		],
+  "vim.leader": "<space>",
+  "vim.handleKeys": {
+    "<C-a>": false,
+    "<C-S-e>": false,
+    "<C-f>": false
+  },
+  "rust-analyzer.cargo.allFeatures": true
+}

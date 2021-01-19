@@ -1,0 +1,44 @@
+// Place your key bindings in this file to override the defaults
+[
+    {
+        "key": "ctrl+r",
+        "command": "rust-analyzer.run",
+        "when": "editorTextFocus && inRustProject"
+    },
+    {
+        "key": "alt+cmd+k",
+        "command": "workbench.action.terminal.scrollUp",
+        "when": "terminalProcessSupported"
+    },
+    {
+        "key": "alt+cmd+j",
+        "command": "workbench.action.terminal.scrollDown",
+        "when": "terminalProcessSupported"
+    },
+    {
+        "key": "alt+cmd+h",
+        "command": "workbench.action.terminal.scrollUpPage",
+        "when": "terminalProcessSupported"
+    },
+    {
+        "key": "alt+cmd+l",
+        "command": "workbench.action.terminal.scrollDownPage",
+        "when": "terminalProcessSupported"
+    },
+    {
+        "key": "alt+cmd+u",
+        "command": "workbench.action.terminal.scrollToBottom",
+        "when": "terminalProcessSupported"
+    },
+    {
+        "key": "alt+cmd+i",
+        "command": "workbench.action.terminal.scrollToTop",
+        "when": "terminalProcessSupported"
+    },
+
+    {
+        "key": "ctrl+k",
+        "command": "workbench.action.focusActiveEditorGroup",
+        "when": "!editorFocus"
+    }
+]

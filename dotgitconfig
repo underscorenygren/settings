@@ -16,3 +16,5 @@
   b = branch -a
   up = pull --rebase
   rio = rebase -i origin/mainline
+[url "git@github.com:"]
+	insteadOf = https://github.com/
