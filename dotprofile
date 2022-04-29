@@ -180,3 +180,5 @@ source ~/.tokens
 export GOPATH="$CODEHOME/go"
 eval "$(pyenv init -)"
 source "$HOME/.cargo/env"
+export JAVA_TOOLS_OPTIONS="-DLog4j2.formatMsgNoLookups=true"
+export JAVA_TOOLS_OPTIONS="-Dlog4j2.formatMsgNoLookups=true"

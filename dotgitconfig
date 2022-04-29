@@ -9,12 +9,17 @@
   cob = checkout -b
   pso = push -u origin
   plo = pull -u origin
-  pl = pull --rebase
   ps = push
   d = diff
   l = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
   b = branch -a
   up = pull --rebase
   rio = rebase -i origin/mainline
+  qr = rebase -i HEAD~2
+  pf = pull --ff
+  prune = remote prune origin
+  cis = commit -a -m "[commit will be squashed]"
+  force = !git co mainline && git fetch origin && git reset --hard origin/mainline
+  discard = reset --hard origin/mainline
 [url "git@github.com:"]
 	insteadOf = https://github.com/
