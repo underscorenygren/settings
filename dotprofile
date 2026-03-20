@@ -1,10 +1,15 @@
-_JAVA_HOME=$(/usr/libexec/java_home)
+if [ -x /usr/libexec/java_home ]; then
+    _JAVA_HOME=$(/usr/libexec/java_home 2> /dev/null)
+fi
 export CODEHOME="$HOME/code"
 export GOPATH="$CODEHOME/go"
 PYTHON_VERSION=3.8.2
 PYTHON_BIN="$HOME/Library/Python/$PYTHON_VERSION/bin/"
 export PYENV_VERSION=$PYTHON_VERSION
-export PATH="$PATH:/usr/local/sbin:$HOME/.rvm/bin:$_JAVA_HOME/bin:$HOME/dev/scala-2.11.6/bin:usr/local/opt/go/libexec/bin:$GOPATH/bin:$PYTHON_BIN:$CODEHOME/infrastructure/bin:$CODEHOME/bin:$HOME/perl5/bin:$HOME/.cargo/bin"
+if [ -x /usr/libexec/path_helper ]; then
+  eval `/usr/libexec/path_helper -s`
+fi
+export PATH="$PATH:/usr/local/sbin:$HOME/.rvm/bin:$_JAVA_HOME/bin:$HOME/dev/scala-2.11.6/bin:usr/local/opt/go/libexec/bin:$GOPATH/bin:$PYTHON_BIN:$CODEHOME/infrastructure/bin:$CODEHOME/bin:$HOME/perl5/bin:$HOME/.cargo/bin:$HOME/.local/bin"
 export EDITOR=vim
 export HISTCONTROL=ignoreboth
 export PERL5LIB="$HOME/perl5/lib/perl5"
@@ -149,9 +154,10 @@ alias g=git
 alias tf=terraform
 alias as=ansible-service
 alias vscode="/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code"
+alias python=python3
 
 
-if type brew &>/dev/null; then
+if [ -n "$BASH_VERSION" ] && type brew &>/dev/null; then
   HOMEBREW_PREFIX="$(brew --prefix)"
   if [[ -r "${HOMEBREW_PREFIX}/etc/profile.d/bash_completion.sh" ]]; then
     source "${HOMEBREW_PREFIX}/etc/profile.d/bash_completion.sh"
@@ -166,19 +172,27 @@ docker-ip() {
   docker-machine ip default 2> /dev/null
 }
 
-source ~/.tmuxinator/tmuxinator.bash
+if [ -x ~/.tmuxinator/ ]; then
+    source ~/.tmuxinator/tmuxinator.bash
+fi
 alias tm=tmuxinator
 sshafn() {
   eval $(ssh-agent)
   ssh-add
 }
 alias ssha=sshafn
-source ~/.tokens
-
+if [ -x ~/.tokens/ ]; then
+    source ~/.tokens
+fi
 
 [[ -s "$HOME/.gvm/scripts/gvm" ]] && source "$HOME/.gvm/scripts/gvm"
 export GOPATH="$CODEHOME/go"
-eval "$(pyenv init -)"
+if [ -x pyenv ]; then
+    eval "$(pyenv init -)"
+fi
 source "$HOME/.cargo/env"
 export JAVA_TOOLS_OPTIONS="-DLog4j2.formatMsgNoLookups=true"
 export JAVA_TOOLS_OPTIONS="-Dlog4j2.formatMsgNoLookups=true"
+
+source "$CODEHOME/settings/code.sh"
+
